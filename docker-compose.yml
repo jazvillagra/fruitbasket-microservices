@@ -1,0 +1,123 @@
+version: '3.3'
+services:
+  sunflower:
+    container_name: "sunflower"
+    build:
+        context: ./sunflower
+        dockerfile: Dockerfile
+    image: 'fruitbasket-microservices/sunflower'
+    ports:
+      - '8761:8761'
+    networks:
+      - micro
+    environment:
+            - "spring.cloud.config.uri=http://kiwi:8888/"
+            - "SPRING_PROFILES_ACTIVE=dev"
+
+  kiwi:
+    container_name: kiwi
+    image: 'fruitbasket-microservices/kiwi'
+    build:
+      context: ./kiwi
+      dockerfile: Dockerfile
+    ports:
+      - '8888:8888'
+    links:
+      - sunflower:sunflower
+    networks:
+      - micro
+    environment:
+      - "WAIT_HOSTS=sunflower:8761"
+      - "WAIT_HOSTS_TIMEOUT=300"
+      - "eureka.client.service-url.defaultZone=http://sunflower:8761/eureka"
+
+  watermelon:
+    container_name: watermelon
+    image: 'fruitbasket-microservices/watermelon'
+    build:
+      context: ./watermelon
+      dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
+    depends_on:
+      - kiwi
+      - sunflower
+    links:
+      - sunflower:sunflower
+      - kiwi:kiwi
+    networks:
+      - micro
+    environment:
+      - "spring.cloud.config.uri=http://kiwi:8888/"
+      - "eureka.client.service-url.defaultZone=http://sunflower:8761/eureka"
+      - "SPRING_PROFILES_ACTIVE=dev"
+      - "WAIT_HOSTS=kiwi:8888,sunflower:8761"
+      - "WAIT_HOSTS_TIMEOUT=300"
+
+  cherry:
+    container_name: cherry
+    image: 'fruitbasket-microservices/cherry'
+    build:
+      context: ./cherry
+      dockerfile: Dockerfile
+    ports:
+      - '8081:8081'
+    depends_on:
+      - kiwi
+      - sunflower
+    links:
+      - sunflower:sunflower
+      - kiwi:kiwi
+    networks:
+      - micro
+    environment:
+      - "spring.cloud.config.uri=http://kiwi:8888/"
+      - "eureka.client.service-url.defaultZone=http://sunflower:8761/eureka"
+      - "SPRING_PROFILES_ACTIVE=dev"
+      - "WAIT_HOSTS=kiwi:8888,sunflower:8761"
+      - "WAIT_HOSTS_TIMEOUT=300"
+
+  cherry-pack:
+    container_name: cherry-pack
+    image: 'fruitbasket-microservices/cherry'
+    depends_on:
+      - kiwi
+      - sunflower
+      - cherryh
+    links:
+      - sunflower:sunflower
+      - kiwi:kiwi
+    networks:
+      - micro
+    environment:
+      - "spring.cloud.config.uri=http://kiwi:8888/"
+      - "eureka.client.service-url.defaultZone=http://sunflower:8761/eureka"
+      - "SPRING_PROFILES_ACTIVE=dev"
+      - "WAIT_HOSTS=kiwi:8888,sunflower:8761"
+      - "WAIT_HOSTS_TIMEOUT=300"
+
+  strawberry:
+    container_name: strawberry
+    build:
+      context: ./strawberry
+      dockerfile: Dockerfile
+    image: 'fruitbasket-microservices/strawberry'
+    links:
+      - sunflower:sunflower
+      - kiwi:kiwi
+      - watermelon:watermelon
+      - cherry:cherry
+    ports:
+      - '8181:8181'
+    networks:
+      - micro
+    environment:
+      - "spring.cloud.config.uri=http://kiwi:8888/"
+      - "eureka.client.service-url.defaultZone=http://sunflower:8761/eureka"
+      - "SPRING_PROFILES_ACTIVE=dev"
+      - "WAIT_HOSTS=kiwi:8888,sunflower:8761"
+      - "WAIT_HOSTS_TIMEOUT=300"
+
+networks:
+  micro:
+    driver: bridge
