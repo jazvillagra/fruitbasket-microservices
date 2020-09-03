@@ -2,6 +2,7 @@ package com.example.cherry.controller;
 
 import com.example.cherry.constants.ApiPaths;
 import com.example.cherry.dto.PersonaDTO;
+import com.example.cherry.service.PersonaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ public class ApiController {
 
     @Autowired
     private DiscoveryClient discoveryClient;
+    @Autowired
+    private PersonaService personaService;
 
     Logger LOGGER = LoggerFactory.getLogger(ApiController.class);
 
@@ -27,41 +30,27 @@ public class ApiController {
             @PathVariable String applicationName) {
         return this.discoveryClient.getInstances(applicationName);
     }
+
     /**
-     * Registra una persona en el sistema y retorna el objeto de la Persona
-     *
-     * @param  id ID único
-     * @param  nombres Nombres de la nueva persona
-     * @param  apellidos Apellidos de la nueva persona
-     * @param  imagen Imagen de un tamaño máximo de 500kB
+     * Registra a una persona. Devuelve objeto construido con datos enviados como parámetros
+     * @param id
+     * @param nombres
+     * @param apellidos
+     * @param imagen
+     * @return
+     * @throws Exception
      */
     @PostMapping(ApiPaths.REGISTRAR_PERSONA)
-    public PersonaDTO registrarPersona(@RequestParam("id") String id,
-                                       @RequestParam("nombres") String nombres,
-                                       @RequestParam("apellidos") String apellidos,
-                                       @RequestParam("imagen") MultipartFile imagen) throws Exception {
-        PersonaDTO personaDTO = new PersonaDTO();
-        personaDTO.setId(id);
-        personaDTO.setNombres(nombres);
-        personaDTO.setApellidos(apellidos);
-        personaDTO.setImagen(imagen);
+    public PersonaDTO registrarPersona(@RequestParam String id,
+                                       @RequestParam String nombres,
+                                       @RequestParam String apellidos,
+                                       @RequestParam MultipartFile imagen) throws Exception {
 
-        // Validación
-        if (personaDTO.getId().length() > 10 || personaDTO.getId().length() < 1) {
-            throw new Exception("Campo 'id' debe tener una longitud entre 1 y 10 caracteres");
-        }
+        PersonaDTO persona = personaService.savePersona(id, nombres, apellidos, imagen);
 
-        if (personaDTO.getNombres().length() > 100 || personaDTO.getNombres().length() < 1) {
-            throw new Exception("Campo 'nombres' debe tener una longitud entre 1 y 100 caracteres");
-        }
+        // Se imprimen el objeto construido ya que no hay persistencia de datos
+        LOGGER.info("Se registró a la persona: " + persona.toString());
 
-        if (personaDTO.getApellidos().length() > 200 || personaDTO.getApellidos().length() < 1) {
-            throw new Exception("El campo 'apellidos' debe tener entre 1 y 200 caracteres");
-        }
-
-        // No se guarda nada en una BD por lo que solo imprimimos los datos pasados que se guardaron y ya
-        LOGGER.info("Se registró a la persona: " + personaDTO.toString());
-
-        return (personaDTO);
+        return (persona);
     }
 }
