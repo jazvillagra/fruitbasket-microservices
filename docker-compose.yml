@@ -29,7 +29,7 @@ services:
     environment:
       - "WAIT_HOSTS=sunflower:8761"
       - "WAIT_HOSTS_TIMEOUT=300"
-      - "eureka.client.service-url.defaultZone=http://sunflower:8761/eureka"
+      - "eureka.client.service-url.defaultZone=http://sunflower:8761/eureka/"
 
   watermelon:
     container_name: watermelon
@@ -49,7 +49,7 @@ services:
       - micro
     environment:
       - "spring.cloud.config.uri=http://kiwi:8888/"
-      - "eureka.client.service-url.defaultZone=http://sunflower:8761/eureka"
+      - "eureka.client.service-url.defaultZone=http://sunflower:8761/eureka/"
       - "SPRING_PROFILES_ACTIVE=dev"
       - "WAIT_HOSTS=kiwi:8888,sunflower:8761"
       - "WAIT_HOSTS_TIMEOUT=300"
@@ -72,7 +72,7 @@ services:
       - micro
     environment:
       - "spring.cloud.config.uri=http://kiwi:8888/"
-      - "eureka.client.service-url.defaultZone=http://sunflower:8761/eureka"
+      - "eureka.client.service-url.defaultZone=http://sunflower:8761/eureka/"
       - "SPRING_PROFILES_ACTIVE=dev"
       - "WAIT_HOSTS=kiwi:8888,sunflower:8761"
       - "WAIT_HOSTS_TIMEOUT=300"
@@ -91,7 +91,7 @@ services:
       - micro
     environment:
       - "spring.cloud.config.uri=http://kiwi:8888/"
-      - "eureka.client.service-url.defaultZone=http://sunflower:8761/eureka"
+      - "eureka.client.service-url.defaultZone=http://sunflower:8761/eureka/"
       - "SPRING_PROFILES_ACTIVE=dev"
       - "WAIT_HOSTS=kiwi:8888,sunflower:8761"
       - "WAIT_HOSTS_TIMEOUT=300"
@@ -113,7 +113,7 @@ services:
       - micro
     environment:
       - "spring.cloud.config.uri=http://kiwi:8888/"
-      - "eureka.client.service-url.defaultZone=http://sunflower:8761/eureka"
+      - "eureka.client.service-url.defaultZone=http://sunflower:8761/eureka/"
       - "SPRING_PROFILES_ACTIVE=dev"
       - "WAIT_HOSTS=kiwi:8888,sunflower:8761"
       - "WAIT_HOSTS_TIMEOUT=300"
