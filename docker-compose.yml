@@ -83,7 +83,7 @@ services:
     depends_on:
       - kiwi
       - sunflower
-      - cherryh
+      - cherry
     links:
       - sunflower:sunflower
       - kiwi:kiwi
