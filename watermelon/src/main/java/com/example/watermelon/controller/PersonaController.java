@@ -1,6 +1,7 @@
 package com.example.watermelon.controller;
 
 import com.example.watermelon.constants.ApiPaths;
+import com.example.watermelon.dto.PersonaDTO;
 import com.example.watermelon.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,7 @@ public class PersonaController {
     PersonaService personaService;
 
     @GetMapping(ApiPaths.PERSONA_BY_ID)
-    public String getPersona(@PathVariable(value = "id") String id)
+    public PersonaDTO getPersona(@PathVariable(value = "id") String id)
             throws MalformedParametersException{
         try{
             return personaService.getPersonaById(id);

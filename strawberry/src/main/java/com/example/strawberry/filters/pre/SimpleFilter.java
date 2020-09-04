@@ -1,4 +1,4 @@
-package com.example.strawberry.filters;
+package com.example.strawberry.filters.pre;
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;

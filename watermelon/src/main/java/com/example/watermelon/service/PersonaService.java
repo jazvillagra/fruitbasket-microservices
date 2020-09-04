@@ -1,9 +1,11 @@
 package com.example.watermelon.service;
 
+import com.example.watermelon.dto.PersonaDTO;
+
 import java.lang.reflect.MalformedParametersException;
 
 public interface PersonaService {
 
-    String getPersonaById(String id) throws MalformedParametersException, InterruptedException;
+    PersonaDTO getPersonaById(String id) throws MalformedParametersException, InterruptedException;
 
 }

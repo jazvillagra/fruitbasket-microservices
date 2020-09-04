@@ -1,6 +1,6 @@
 package com.example.strawberry;
 
-import com.example.strawberry.filters.SimpleFilter;
+import com.example.strawberry.filters.pre.SimpleFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;

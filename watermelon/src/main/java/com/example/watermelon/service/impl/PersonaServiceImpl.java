@@ -31,7 +31,7 @@ public class PersonaServiceImpl implements PersonaService {
             @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",
                             value = AppConstants.MAX_TOLERANCIA_SEC)
     })
-    public String getPersonaById(String id) throws MalformedParametersException, InterruptedException {
+    public PersonaDTO getPersonaById(String id) throws MalformedParametersException, InterruptedException {
 
         try {
             if (waitSecs != null && waitSecs > 0) {
@@ -52,7 +52,7 @@ public class PersonaServiceImpl implements PersonaService {
         personaDTO.setNombres("cornelia");
         personaDTO.setImagen(null);
 
-        return personaDTO.toString();
+        return personaDTO;
     }
     public String fallbackObtenerPersona(String id) {
         return timeoutMsg;
