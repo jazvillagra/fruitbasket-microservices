@@ -18,12 +18,11 @@ public class PersonaController {
 
     @GetMapping(ApiPaths.PERSONA_BY_ID)
     public PersonaDTO getPersona(@PathVariable(value = "id") String id)
-            throws MalformedParametersException{
-        try{
-            return personaService.getPersonaById(id);
-        } catch (Exception e){
+            throws MalformedParametersException, InterruptedException{
+        if (id == null || id.length() > 10 || id.length() < 1) {
             throw new MalformedParametersException("Campo 'id' debe tener una longitud entre 1 y 10 caracteres");
         }
+        return personaService.getPersonaById(id);
     }
 
 }

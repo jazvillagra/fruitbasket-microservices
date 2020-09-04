@@ -43,19 +43,12 @@ public class PersonaServiceImpl implements PersonaService {
         }
         //Datos de prueba
         PersonaDTO personaDTO = new PersonaDTO();
-        if (id == null || id.length() > 10 || id.length() < 1) {
-            LOGGER.error("Campo 'id' debe tener una longitud entre 1 y 10 caracteres");
-            throw new MalformedParametersException("Campo 'id' debe tener una longitud entre 1 y 10 caracteres");
-        }
         personaDTO.setId(id);
         personaDTO.setApellidos("street");
         personaDTO.setNombres("cornelia");
         personaDTO.setImagen(null);
 
         return personaDTO;
-    }
-    public String fallbackObtenerPersona(String id) {
-        return timeoutMsg;
     }
 
 }
