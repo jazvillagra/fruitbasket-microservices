@@ -32,7 +32,7 @@ public class PersonaServiceImpl implements PersonaService {
                     "Apellidos recibidos: " + apellidos);
             throw new Exception("El campo 'apellidos' debe tener entre 1 y 200 caracteres");
         }
-        if(imagen.getSize() > 5120) {
+        if(imagen.getSize() > 51200) {
             LOGGER.error("La imagen no puede superar los 500KB en tamaño." +
                     "Tamaño de imagen recibida: "+ imagen.getSize() + "bytes");
             throw new Exception("La imagen no puede superar los 500KB en tamaño");
