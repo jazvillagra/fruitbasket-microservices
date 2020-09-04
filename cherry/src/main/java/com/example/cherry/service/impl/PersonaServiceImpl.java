@@ -5,12 +5,10 @@ import com.example.cherry.dto.PersonaDTO;
 import com.example.cherry.service.PersonaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-@RefreshScope
 public class PersonaServiceImpl implements PersonaService {
     Logger LOGGER = LoggerFactory.getLogger(ApiController.class);
     @Override
@@ -37,7 +35,9 @@ public class PersonaServiceImpl implements PersonaService {
         personaDTO.setId(id);
         personaDTO.setNombres(nombres);
         personaDTO.setApellidos(apellidos);
+        System.out.println("------------------ seteando imagen....");
         personaDTO.setImagen(imagen);
+        System.out.println("------------------- imagen seteada a dto");
 
         return personaDTO;
     }
