@@ -19,23 +19,19 @@ public class PersonaServiceImpl implements PersonaService {
 
         // Validación
         if (id.length() < 1 || id.length() > 10) {
-            LOGGER.error("El id del objeto debe tener una longitud entre 1 y 10 caracteres. Id Recibido: " + id);
+            LOGGER.error("El id del objeto debe tener una longitud entre 1 y 10 caracteres." +
+                    "Id Recibido: %s", id);
             throw new Exception("El id del objeto debe tener una longitud entre 1 y 10 caracteres");
         }
         if (nombres.length() > 100 || nombres.length() < 1) {
             LOGGER.error("El campo nombres debe tener una longitud entre 1 y 10 caracteres. " +
-                    "Nombres Recibidos: "+ nombres);
+                    "Nombres Recibidos: %s", nombres);
             throw new Exception("El campo nombres debe tener una longitud entre 1 y 100 caracteres");
         }
         if (apellidos.length() > 200 || apellidos.length() < 1) {
             LOGGER.error("El campo apellidos debe tener una longitud entre 1 y 200 caracteres. " +
-                    "Apellidos recibidos: " + apellidos);
+                    "Apellidos recibidos: %s", apellidos);
             throw new Exception("El campo 'apellidos' debe tener entre 1 y 200 caracteres");
-        }
-        if(imagen.getSize() > 51200) {
-            LOGGER.error("La imagen no puede superar los 500KB en tamaño." +
-                    "Tamaño de imagen recibida: "+ imagen.getSize() + "bytes");
-            throw new Exception("La imagen no puede superar los 500KB en tamaño");
         }
         PersonaDTO personaDTO = new PersonaDTO();
         personaDTO.setId(id);
